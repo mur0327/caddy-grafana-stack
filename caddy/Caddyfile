@@ -1,0 +1,38 @@
+### Global options
+{
+	admin 0.0.0.0:2019
+
+	metrics {
+		per_host
+	}
+
+	log access-json {
+		include http.log.access.reverse_proxy
+		output file /var/log/caddy/access.log {
+			roll_size 1GiB
+			roll_keep 5
+			roll_keep_for 90d
+		}
+		format json
+		level INFO
+	}
+}
+
+### Domain options
+grafana.example.com {
+	log reverse_proxy
+
+	reverse_proxy grafana:3000
+}
+
+# alloy.example.com {
+# 	log reverse_proxy
+
+# 	reverse_proxy grafana-alloy:12345
+# }
+
+# prometheus.example.com {
+# 	log reverse_proxy
+
+# 	reverse_proxy grafana-prometheus:9090
+# }
